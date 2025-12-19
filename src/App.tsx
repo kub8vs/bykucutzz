@@ -19,7 +19,7 @@ const App = () => (
           <Route path="/" element={
             <div className="bg-black min-h-screen">
               <Index /> 
-              {/* USUNIĘTO <ReservationForm /> - Teraz formularz jest elegancko wbudowany w Index.tsx */}
+              {/* USUNIĘTO: <ReservationForm /> */}
             </div>
           } />
           <Route path="*" element={<NotFound />} />
