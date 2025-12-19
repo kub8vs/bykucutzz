@@ -1,22 +1,19 @@
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, X, ArrowRight, Scissors, Phone, User, Calendar, Clock } from "lucide-react";
-import { format } from "date-fns";
+import React, { useState } from 'react';
+import { Scissors, Loader2, Phone, User, Calendar, Clock, ShoppingBag } from 'lucide-react';
 
-// PEŁNA LISTA 12 USŁUG
 const services = [
-  { id: "strzyzenie-byku", name: "Strzyżenie męskie (Byku)", itemId: "20906887" },
-  { id: "strzyzenie", name: "Strzyżenie męskie", itemId: "20906938" },
-  { id: "buzzcut", name: "Buzz Cut", itemId: "19625140" },
-  { id: "metamorfoza", name: "Metamorfoza", itemId: "19625235" },
-  { id: "design", name: "Design / Wzorek", itemId: "19625171" },
-  { id: "combo-byku", name: "Strzyżenie + Broda (Byku)", itemId: "20907054" },
-  { id: "combo", name: "Strzyżenie + Broda", itemId: "20907121" },
-  { id: "broda", name: "Strzyżenie brody", itemId: "20907287" },
-  { id: "repigmentacja", name: "Repigmentacja brody", itemId: "20676098" },
-  { id: "konturowanie", name: "Konturowanie brody", itemId: "19626167" },
-  { id: "zero-broda", name: "Głowa na 0 + broda", itemId: "20932984" },
-  { id: "woskowanie", name: "Woskowanie nosa", itemId: "20676148" },
+  { id: "strzyzenie-byku", name: "Strzyżenie męskie (Byku)" },
+  { id: "strzyzenie", name: "Strzyżenie męskie" },
+  { id: "buzzcut", name: "Buzz Cut" },
+  { id: "metamorfoza", name: "Metamorfoza" },
+  { id: "design", name: "Design / Wzorek" },
+  { id: "combo-byku", name: "Strzyżenie + Broda (Byku)" },
+  { id: "combo", name: "Strzyżenie + Broda" },
+  { id: "broda", name: "Strzyżenie brody" },
+  { id: "repigmentacja", name: "Repigmentacja brody" },
+  { id: "konturowanie", name: "Konturowanie brody" },
+  { id: "zero-broda", name: "Głowa na 0 + broda" },
+  { id: "woskowanie", name: "Woskowanie nosa" },
 ];
 
 const barbers = [
@@ -27,154 +24,119 @@ const barbers = [
   { id: "ryan", name: "Ryan" },
 ];
 
-const BookingSection = () => {
-  const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [selectedBarber, setSelectedBarber] = useState<string | null>(null);
-  const [userName, setUserName] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [showBooking, setShowBooking] = useState(false);
-  const [isServiceOpen, setIsServiceOpen] = useState(false);
-  const [isBarberOpen, setIsBarberOpen] = useState(false);
+export default function BookingSection() {
+  const [formData, setFormData] = useState({
+    name: '', phone: '', email: '', service: '', barber: '', date: '', time: ''
+  });
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
-  // LOGIKA WYSYŁKI IDENTYCZNA Z TWOIM DRUGIM FORMULARZEM
-  const handleBooking = async () => {
-    if (!selectedService || !selectedBarber || !userName || !userPhone) {
-      alert("Proszę wypełnić wszystkie pola (Imię i Telefon)!");
-      return;
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
-    const sData = services.find(s => s.id === selectedService);
-    const bData = barbers.find(b => b.id === selectedBarber);
+    setMessage('');
 
     try {
-      const ZAPIER_URL = 'https://hooks.zapier.com/hooks/catch/25754214/uarzdes/';
-      
-      // KLUCZ: Używamy URLSearchParams zamiast JSON, aby ominąć CORS
-      const params = new URLSearchParams();
-      params.append('name', userName);
-      params.append('phone', userPhone);
-      params.append('service', sData?.name || "");
-      params.append('barber', bData?.id || "");
-      params.append('date', format(new Date(), "yyyy-MM-dd")); // Domyślnie dzisiaj
-      params.append('source', 'Premium_Form');
+      const body = new URLSearchParams();
+      Object.entries(formData).forEach(([key, value]) => body.append(key, value));
 
-      await fetch(ZAPIER_URL, {
+      await fetch('https://hooks.zapier.com/hooks/catch/25754214/uarzdes/', {
         method: 'POST',
-        mode: 'no-cors', // To sprawia, że dane przechodzą bez blokady
-        body: params
+        mode: 'no-cors', // Gwarantuje wysyłkę bez błędów CORS
+        body: body
       });
 
-      setShowBooking(false);
-      alert("✅ REZERWACJA WYSŁANA! Barber zaraz do Ciebie oddzwoni.");
-      setUserName("");
-      setUserPhone("");
+      setMessage('✅ REZERWACJA WYSŁANA! CZEKAJ NA KONTAKT.');
+      setFormData({ name: '', phone: '', email: '', service: '', barber: '', date: '', time: '' });
     } catch (error) {
-      alert("❌ Błąd sieci. Wyłącz AdBlocka.");
+      setMessage('❌ Błąd połączenia. Spróbuj ponownie.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section className="py-24 bg-background min-h-[900px]">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center mb-16 uppercase tracking-tighter">
-          <h2 className="text-6xl font-display">UMÓW <span className="text-primary italic">WIZYTĘ</span></h2>
-          <p className="text-muted-foreground mt-4 tracking-widest font-bold text-xs">WYBIERZ SERWIS I MISTRZA</p>
+    <section id="rezerwacja" className="py-24 bg-black text-white relative overflow-hidden">
+      {/* Dekoracyjne tło */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent"></div>
+      </div>
+
+      <div className="container mx-auto px-4 max-w-2xl relative z-10">
+        <div className="text-center mb-12">
+          <Scissors className="mx-auto text-primary mb-6 animate-pulse" size={48} />
+          <h2 className="text-5xl md:text-7xl font-display uppercase italic tracking-tighter mb-4">
+            ZAREZERWUJ <span className="text-primary">TERMIN</span>
+          </h2>
+          <p className="text-white/40 uppercase tracking-[0.3em] text-[10px] font-bold">
+            Pomiń kolejki — zarezerwuj bezpośrednio u nas
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-10">
-          {/* USŁUGA */}
-          <div className="relative">
-            <button onClick={() => setIsServiceOpen(!isServiceOpen)} className="w-full glass-card p-6 rounded-2xl border border-white/10 flex justify-between items-center bg-card shadow-xl">
-              <div className="text-left">
-                <p className="text-[10px] text-primary font-black mb-1 tracking-widest uppercase">1. USŁUGA</p>
-                <p className="font-display text-xl uppercase tracking-tight">{services.find(s => s.id === selectedService)?.name || "Co robimy?"}</p>
+        <form onSubmit={handleSubmit} className="space-y-4 bg-white/5 p-8 md:p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-sm shadow-2xl">
+          {/* Dane osobowe */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Imię i Nazwisko</label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+                <input name="name" placeholder="JAKUB ZIMNICKI" value={formData.name} onChange={handleChange} required className="w-full bg-black/50 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-primary transition-all text-sm uppercase font-bold" />
               </div>
-              <ChevronDown className={`text-primary transition-transform ${isServiceOpen ? "rotate-180" : ""}`} />
-            </button>
-            <AnimatePresence>
-              {isServiceOpen && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute top-full left-0 right-0 mt-2 bg-card border border-white/10 rounded-2xl z-[100] max-h-60 overflow-y-auto shadow-2xl">
-                  {services.map(s => (
-                    <button key={s.id} onClick={() => { setSelectedService(s.id); setIsServiceOpen(false); }} className="w-full p-4 text-left hover:bg-primary/20 border-b border-white/5 uppercase text-xs font-bold">{s.name}</button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Telefon</label>
+              <div className="relative">
+                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+                <input name="phone" placeholder="+48 000 000 000" value={formData.phone} onChange={handleChange} required className="w-full bg-black/50 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-primary transition-all text-sm font-bold" />
+              </div>
+            </div>
           </div>
 
-          {/* BARBER */}
-          <div className="relative">
-            <button onClick={() => setIsBarberOpen(!isBarberOpen)} className="w-full glass-card p-6 rounded-2xl border border-white/10 flex justify-between items-center bg-card shadow-xl">
-              <div className="text-left">
-                <p className="text-[10px] text-primary font-black mb-1 tracking-widest uppercase">2. BARBER</p>
-                <p className="font-display text-xl uppercase tracking-tight">{barbers.find(b => b.id === selectedBarber)?.name || "Kogo wybierasz?"}</p>
-              </div>
-              <ChevronDown className={`text-primary transition-transform ${isBarberOpen ? "rotate-180" : ""}`} />
-            </button>
-            <AnimatePresence>
-              {isBarberOpen && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute top-full left-0 right-0 mt-2 bg-card border border-white/10 rounded-2xl z-[100] shadow-2xl overflow-hidden">
-                  {barbers.map(b => (
-                    <button key={b.id} onClick={() => { setSelectedBarber(b.id); setIsBarberOpen(false); }} className="w-full p-4 text-left hover:bg-primary/20 border-b border-white/5 uppercase text-xs font-bold">{b.name}</button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+          {/* Wybór Usługi i Barbera */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Wybierz Barbera</label>
+              <select name="barber" value={formData.barber} onChange={handleChange} required className="w-full bg-black/50 border border-white/10 p-4 rounded-2xl outline-none focus:border-primary text-xs font-black uppercase appearance-none cursor-pointer">
+                <option value="">Wybierz mistrza...</option>
+                {barbers.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Rodzaj Usługi</label>
+              <select name="service" value={formData.service} onChange={handleChange} required className="w-full bg-black/50 border border-white/10 p-4 rounded-2xl outline-none focus:border-primary text-xs font-black uppercase appearance-none cursor-pointer">
+                <option value="">Wybierz usługę...</option>
+                {services.map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div className="flex justify-center">
-          <button 
-            disabled={!selectedService || !selectedBarber}
-            onClick={() => setShowBooking(true)}
-            className={`group px-16 py-6 rounded-full font-display text-2xl flex items-center gap-4 transition-all duration-500
-              ${selectedService && selectedBarber ? "bg-primary text-background hover:scale-105 shadow-[0_0_50px_rgba(var(--primary),0.3)]" : "bg-white/5 text-white/20 cursor-not-allowed"}`}
-          >
-            SPRAWDŹ TERMINY <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+          {/* Data i Godzina */}
+          <div className="grid grid-cols-2 gap-4 text-white">
+            <div className="space-y-1">
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest text-white">Data</label>
+              <input name="date" type="date" value={formData.date} onChange={handleChange} required className="w-full bg-black/50 border border-white/10 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold invert" />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest text-white">Godzina</label>
+              <input name="time" type="time" value={formData.time} onChange={handleChange} required className="w-full bg-black/50 border border-white/10 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold invert" />
+            </div>
+          </div>
+
+          <button type="submit" disabled={loading} className="w-full py-6 mt-6 bg-primary text-background rounded-full font-display text-2xl uppercase tracking-[0.2em] hover:bg-white hover:scale-[1.02] transition-all shadow-[0_10px_40px_rgba(255,215,0,0.2)] disabled:opacity-50">
+            {loading ? <Loader2 className="animate-spin mx-auto" size={32} /> : 'ZATWIERDŹ TERMIN'}
           </button>
-        </div>
+        </form>
 
-        {/* MODAL FINALNY Z DANYMI - To tutaj brakowało danych do Zapiera */}
-        <AnimatePresence>
-          {showBooking && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-              <div className="absolute inset-0 bg-background/95 backdrop-blur-md" onClick={() => setShowBooking(false)} />
-              <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="relative w-full max-w-md bg-card p-8 rounded-[2rem] border border-white/10 shadow-2xl">
-                <button onClick={() => setShowBooking(false)} className="absolute top-6 right-6 text-muted-foreground hover:text-white"><X /></button>
-                <div className="text-center mb-8">
-                  <Scissors className="text-primary mx-auto mb-4" />
-                  <h3 className="text-2xl font-display uppercase italic">Potwierdź dane</h3>
-                </div>
-                
-                <div className="space-y-4 mb-8">
-                  <div className="space-y-1">
-                    <label className="text-[10px] text-primary font-black uppercase tracking-widest px-1">Imię i Nazwisko</label>
-                    <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Podaj imię" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none focus:border-primary text-sm uppercase font-bold" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] text-primary font-black uppercase tracking-widest px-1">Telefon</label>
-                    <input type="tel" value={userPhone} onChange={(e) => setUserPhone(e.target.value)} placeholder="Numer telefonu" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none focus:border-primary text-sm font-bold" />
-                  </div>
-                </div>
-
-                <button 
-                  onClick={handleBooking}
-                  disabled={loading}
-                  className="w-full py-6 bg-primary text-background rounded-full font-display text-xl uppercase tracking-widest hover:bg-white transition-colors"
-                >
-                  {loading ? "WYSYŁANIE..." : "ZATWIERDŹ"}
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {message && (
+          <div className={`mt-8 p-6 rounded-3xl text-center text-[10px] font-black uppercase tracking-[0.3em] border shadow-2xl animate-bounce ${message.includes('✅') ? 'bg-primary/10 text-primary border-primary/20' : 'bg-red-500/10 text-red-500 border-red-500/20'}`}>
+            {message}
+          </div>
+        )}
       </div>
     </section>
   );
-};
-
-export default BookingSection;
+}
