@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Scissors, Loader2, Phone, User, Calendar, Clock, Mail } from 'lucide-react';
+import { Scissors, Loader2, Phone, User, Calendar, Clock } from 'lucide-react';
 
 const services = [
   { id: "strzyzenie-byku", name: "Strzyżenie męskie (Byku)" },
@@ -26,13 +26,7 @@ const barbers = [
 
 export default function BookingSection() {
   const [formData, setFormData] = useState({
-    name: '', 
-    phone: '', 
-    email: '', // Dodane pole Email
-    service: '', 
-    barber: '', 
-    date: '', 
-    time: ''
+    name: '', phone: '', service: '', barber: '', date: '', time: ''
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -47,18 +41,18 @@ export default function BookingSection() {
     setMessage('');
 
     try {
+      // LOGIKA IDENTYCZNA Z FORMULARZEM Z FOOTERA
       const body = new URLSearchParams();
-      // Wszystkie dane, w tym Email, trafiają do Zapiera
       Object.entries(formData).forEach(([key, value]) => body.append(key, value));
 
       await fetch('https://hooks.zapier.com/hooks/catch/25754214/uarzdes/', {
         method: 'POST',
-        mode: 'no-cors', // Omija blokady CORS
+        mode: 'no-cors', // Omija błędy CORS i brak SSL lokalnie
         body: body
       });
 
-      setMessage('✅ REZERWACJA WYSŁANA! CZEKAJ NA KONTAKT.');
-      setFormData({ name: '', phone: '', email: '', service: '', barber: '', date: '', time: '' });
+      setMessage('✅ REZERWACJA WYSŁANA!');
+      setFormData({ name: '', phone: '', service: '', barber: '', date: '', time: '' });
     } catch (error) {
       setMessage('❌ Błąd połączenia.');
     } finally {
@@ -75,12 +69,11 @@ export default function BookingSection() {
             ZAREZERWUJ <span className="text-primary italic">TERMIN</span>
           </h2>
           <p className="text-white/30 uppercase tracking-[0.4em] text-[10px] font-black">
-            Direct Protocol — Pełna Rezerwacja
+            Direct Protocol — Omiń system Booksy
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 bg-[#0a0a0a] p-8 md:p-12 rounded-[3rem] border border-white/10 shadow-2xl">
-          {/* Imię i Telefon */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Imię i Nazwisko</label>
@@ -92,16 +85,6 @@ export default function BookingSection() {
             </div>
           </div>
 
-          {/* POLE EMAIL (DODANE) */}
-          <div className="space-y-1">
-            <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Adres E-mail</label>
-            <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
-              <input name="email" type="email" placeholder="TWOJ@EMAIL.COM" value={formData.email} onChange={handleChange} className="w-full bg-black border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-primary transition-all text-sm font-bold text-white placeholder:text-white/10" />
-            </div>
-          </div>
-
-          {/* Wybór Barbera i Usługi */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Wybierz Barbera</label>
@@ -119,14 +102,13 @@ export default function BookingSection() {
             </div>
           </div>
 
-          {/* Data i Godzina */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest text-white">Data</label>
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Data</label>
               <input name="date" type="date" value={formData.date} onChange={handleChange} required className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold invert" />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest text-white">Godzina</label>
+              <label className="text-[10px] font-black text-primary uppercase px-2 tracking-widest">Godzina</label>
               <input name="time" type="time" value={formData.time} onChange={handleChange} required className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold invert" />
             </div>
           </div>
