@@ -1,5 +1,5 @@
 import { Instagram, Facebook, Clock } from "lucide-react";
-import logo from "@/assets/logo-byku2.png";
+import logo from "@/assets/logo_byku1.png";
 
 const businessHours = [
   { day: "Poniedziałek – Piątek", hours: "10:00-14:30, 15:00-20:00" },
