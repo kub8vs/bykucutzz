@@ -1,73 +1,78 @@
-# Welcome to your Lovable project
+BYKU CUTZZ - Premium Barbershop Website
+BYKU CUTZZ to nowoczesna, responsywna strona internetowa typu Single Page Application (SPA) stworzona dla prestiżowego salonu barberskiego w Łodzi. Projekt stawia na luksusowy design, wysoką wydajność oraz doskonałe wrażenia użytkownika (UX).
 
-## Project info
+Motto: JAKOŚĆ PONAD ILOŚĆ
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+⚡ Główne Funkcje
+Premium UI/UX: Mroczny, elegancki interfejs z teksturą marmuru i neonowymi akcentami.
 
-## How can I edit this code?
+Dynamiczne Animacje: Płynne wejścia elementów i interaktywne logo przy użyciu Framer Motion.
 
-There are several ways of editing your application.
+Integracja z Booksy: Bezpośredni system rezerwacji wizyt online.
 
-**Use Lovable**
+Interaktywne Portfolio: Galeria prac z funkcją Lightbox (powiększanie zdjęć).
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Sekcja Ekipy: Prezentacja barberów wraz z ich specjalizacjami.
 
-Changes made via Lovable will be committed automatically to this repo.
+Mobile First: W pełni responsywne menu i układ dostosowany do urządzeń mobilnych.
 
-**Use your preferred IDE**
+🛠️ Technologie
+Projekt został zbudowany przy użyciu najnowocześniejszych narzędzi webowych:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+React 18 - Biblioteka do budowy interfejsu.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Vite - Ultraszybki system budowania i serwer deweloperski.
 
-Follow these steps:
+Tailwind CSS - Framework do stylizacji opartej na klasach użytkowych.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Framer Motion - Zaawansowany silnik animacji.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Lucide React - Zestaw minimalistycznych ikon.
 
-# Step 3: Install the necessary dependencies.
-npm i
+🚀 Uruchomienie Projektu
+Aby uruchomić projekt lokalnie na swoim komputerze:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Sklonuj repozytorium:
+
+Bash
+git clone https://github.com/KUBZXCS/bykucutzz.git
+Zainstaluj zależności:
+
+Bash
+npm install
+Uruchom tryb deweloperski:
+
+Bash
 npm run dev
-```
+Zbuduj wersję produkcyjną:
 
-**Edit a file directly in GitHub**
+Bash
+npm run build
+🌐 Hosting i Wdrożenie
+Strona jest hostowana na platformie Vercel, co zapewnia:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Automatyczne wdrażanie po każdym git push.
 
-**Use GitHub Codespaces**
+Błyskawiczne ładowanie dzięki sieci Edge Network.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Bezpieczne połączenie SSL.
 
-## What technologies are used for this project?
+📍 Lokalizacja
+BYKU CUTZZ Barbershop ul. Drewnowska 49a, 91-002 Łódź
 
-This project is built with:
+Autor
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Projekt stworzony przez: KUBZXCS
 
-## How can I deploy this project?
+Jak dodać ten plik do GitHuba?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Otwórz plik README.md w VS Code (jeśli go nie masz, stwórz go w głównym folderze).
 
-## Can I connect a custom domain to my Lovable project?
+Wklej powyższą treść.
 
-Yes, you can!
+W terminalu wpisz:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Bash
+git add README.md
+git commit -m "Docs: Added professional README"
+git push origin main
