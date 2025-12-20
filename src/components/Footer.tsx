@@ -1,11 +1,26 @@
-import { Instagram, Facebook, Clock } from "lucide-react";
-import logo from "@/assets/logo_byku1.png";
+import { Instagram, Clock } from "lucide-react";
+import logo from "../assets/logo_byku1.png";
 
 const businessHours = [
   { day: "Poniedziałek – Piątek", hours: "10:00-14:30, 15:00-20:00" },
   { day: "Sobota", hours: "09:00-12:40, 13:00-17:00" },
   { day: "Niedziela", hours: "Zamknięte" },
 ];
+
+// Komponent ikony TikTok, ponieważ Lucide jej nie posiada
+const TikTokIcon = () => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className="w-5 h-5"
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
 
 const Footer = () => {
   return (
@@ -53,7 +68,7 @@ const Footer = () => {
             <h3 className="font-display text-xl text-foreground mb-4">ŚLEDŹ NAS</h3>
             <div className="flex items-center gap-4">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/bykucutzz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:neon-glow"
@@ -61,12 +76,13 @@ const Footer = () => {
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.tiktok.com/@bykucutzz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:neon-glow"
               >
-                <Facebook className="w-5 h-5" />
+                {/* Zmieniono na ikonę TikToka */}
+                <TikTokIcon />
               </a>
             </div>
           </div>
