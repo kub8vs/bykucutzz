@@ -6,7 +6,7 @@ const BOOKSY_URL = "https://booksy.com/pl-pl/293129_bykucutzz-barbershop_barber-
 const services = [
   { name: "Strzyżenie męskie (Byku)", price: "100 PLN", desc: "Usługa premium u właściciela" },
   { name: "Strzyżenie męskie", price: "90 PLN", desc: "Klasyczne strzyżenie + mycie" },
-  { name: "Combo (Byku)", price: "140 PLN", desc: "Włosy + Broda u właściciela" },
+  { name: "Combo Włosy+Broda (Byku)", price: "140 PLN", desc: "Włosy + Broda u właściciela" },
   { name: "Combo Włosy+Broda", price: "130 PLN", desc: "Pełny serwis barberski" },
   { name: "Strzyżenie Brody", price: "60 PLN", desc: "Kształt, kontur i gorący ręcznik" },
   { name: "Buzz Cut", price: "80 PLN", desc: "Strzyżenie samą maszynką" },
