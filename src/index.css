@@ -9,7 +9,6 @@
     --background: 0 0% 4%;
     --foreground: 0 0% 100%;
     --primary: 190 89% 65%;
-    --neon: 190 89% 65%;
   }
   html { scroll-behavior: smooth; }
   body { 
@@ -19,22 +18,21 @@
 }
 
 @layer components {
-  /* Tekstura marmuru w tle */
+  /* Tekstura marmuru - zwiększona widoczność */
   .marble-veins {
     background-image: 
-      linear-gradient(125deg, transparent 45%, hsl(0 0% 18% / 0.15) 45.5%, transparent 46.5%),
-      linear-gradient(75deg, transparent 60%, hsl(0 0% 20% / 0.1) 60.5%, transparent 61.5%);
-    background-size: 800px 600px, 600px 800px;
+      linear-gradient(125deg, transparent 45%, hsl(0 0% 15% / 0.4) 45.5%, transparent 46.5%),
+      linear-gradient(75deg, transparent 60%, hsl(0 0% 20% / 0.3) 60.5%, transparent 61.5%);
+    background-size: 1000px 800px;
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 0.8; /* Większa widoczność tekstury */
   }
 
-  /* Przyciemnienie zdjęcia salonu */
   .hero-overlay {
     background: linear-gradient(
       to bottom,
-      hsl(0 0% 0% / 0.7) 0%,
-      hsl(0 0% 0% / 0.4) 50%,
+      hsl(0 0% 0% / 0.8) 0%,
+      hsl(0 0% 0% / 0.5) 50%,
       hsl(0 0% 0% / 0.9) 100%
     );
   }
