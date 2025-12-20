@@ -12,9 +12,11 @@ const Navbar = () => {
   }, []);
 
   // Usunięto REZERWACJA z listy, aby nie dublować przycisku
+  // Wewnątrz Navbar.tsx zaktualizuj tablicę navLinks:
   const navLinks = [
     { name: "USŁUGI", href: "#services" },
     { name: "EKIPA", href: "#team" },
+    { name: "OPINIE", href: "#reviews" }, // Dodane
     { name: "LOKALIZACJA", href: "#location" },
   ];
 
