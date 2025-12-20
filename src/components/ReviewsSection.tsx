@@ -19,6 +19,24 @@ const reviews = [
     rating: 5,
     text: "Słotu to mistrz detalu. Wzorek wyszedł idealnie. Na pewno wrócę!",
     date: "2 tygodnie temu"
+  },
+  {
+    name: "Jakub Z.",
+    rating: 5,
+    text: "Mega dobry fade u Ryana!",
+    date: "1 dzień temu"
+  },
+  {
+    name: "Piotr H.",
+    rating: 5,
+    text: "Dobra robota Afraish!",
+    date: "5 dni temu"
+  },
+  {
+    name: "Maciek D.",
+    rating: 5,
+    text: "Fresh cut na święta",
+    date: "2 dni temu"
   }
 ];
 
