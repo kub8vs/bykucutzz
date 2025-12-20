@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ReservationForm from "./components/ReservationForm"; // Import z src/
 
 const queryClient = new QueryClient();
 
@@ -19,7 +18,7 @@ const App = () => (
           <Route path="/" element={
             <div className="bg-black min-h-screen">
               <Index /> 
-              {/* USUNIĘTO: <ReservationForm /> */}
+              {/* Tutaj nie powinno być już nic więcej pod Index */}
             </div>
           } />
           <Route path="*" element={<NotFound />} />
