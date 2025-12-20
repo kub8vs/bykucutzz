@@ -1,123 +1,59 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo-byku2.png";
+import { Menu, X, Scissors } from "lucide-react";
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { href: "#uslugi", label: "Usługi" },
-    { href: "#portfolio", label: "Portfolio" },
-    { href: "#ekipa", label: "Ekipa" },
-    { href: "#opinie", label: "Opinie" },
-    { href: "#booking-system", label: "Rezerwacja" },
-    { href: "#lokalizacja", label: "Lokalizacja" },
+    { name: "USŁUGI", href: "#services" },
+    { name: "EKIPA", href: "#team" },
+    { name: "REZERWACJA", href: "#rezerwacja" },
+    { name: "LOKALIZACJA", href: "#location" },
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    setIsMobileMenuOpen(false);
-  };
-
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-border py-2"
-          : "bg-transparent py-4"
-      }`}
-    >
-      <div className="container mx-auto px-4 md:px-8">
-        {/* Desktop Layout - Centered Logo */}
-        <div className="hidden md:flex flex-col items-center">
-          {/* Logo - Centered and Larger */}
-          <a href="#" className="flex items-center mb-4">
-            <img 
-              src={logo} 
-              alt="BYKUCUTZZ" 
-              className={`transition-all duration-500 ${isScrolled ? "h-20" : "h-28"}`} 
-            />
+    <nav className={`fixed w-full z-[500] transition-all duration-500 ${scrolled ? "bg-black/90 backdrop-blur-md py-4 shadow-2xl" : "bg-transparent py-8"}`}>
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        <a href="#" className="flex items-center gap-2 group">
+          <Scissors className="text-primary group-hover:rotate-12 transition-transform" />
+          <span className="font-display text-2xl tracking-tighter italic">BYKU<span className="text-primary">CUTZZ</span></span>
+        </a>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-12">
+          {navLinks.map((link) => (
+            <a key={link.name} href={link.href} className="text-[11px] font-black tracking-[0.3em] text-white/70 hover:text-primary transition-colors">
+              {link.name}
+            </a>
+          ))}
+          <a href="#rezerwacja" className="px-8 py-3 bg-primary text-background rounded-full font-black text-[10px] tracking-widest hover:bg-white transition-all">
+            UMÓW WIZYTĘ
           </a>
-
-          {/* Navigation Links - Below Logo */}
-          <div className="flex items-center gap-8">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className="font-body font-bold text-sm uppercase tracking-widest text-foreground/80 hover:text-primary transition-colors duration-300 relative group"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-              </button>
-            ))}
-            <Button
-              variant="neon"
-              size="default"
-              onClick={() => scrollToSection("#booking-system")}
-              className="booking-trigger"
-            >
-              Umów Wizytę
-            </Button>
-          </div>
         </div>
 
-        {/* Mobile Layout */}
-        <div className="flex md:hidden items-center justify-between">
-          {/* Logo */}
-          <a href="#" className="flex items-center">
-            <img src={logo} alt="BYKUCUTZZ" className="h-16 w-auto" />
-          </a>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="text-foreground p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ${
-            isMobileMenuOpen ? "max-h-96 pb-6 mt-4" : "max-h-0"
-          }`}
-        >
-          <div className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className="font-body font-bold text-sm uppercase tracking-widest text-foreground/80 hover:text-primary transition-colors duration-300 text-left py-2"
-              >
-                {link.label}
-              </button>
-            ))}
-            <Button
-              variant="neon"
-              size="lg"
-              onClick={() => scrollToSection("#booking-system")}
-              className="mt-2 booking-trigger"
-            >
-              Umów Wizytę
-            </Button>
-          </div>
-        </div>
+        {/* Mobile Toggle */}
+        <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={32} /> : <Menu size={32} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black z-[400] flex flex-col items-center justify-center gap-8 animate-in fade-in zoom-in duration-300">
+          {navLinks.map((link) => (
+            <a key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="text-4xl font-display italic hover:text-primary transition-colors">
+              {link.name}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };

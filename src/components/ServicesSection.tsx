@@ -1,79 +1,60 @@
 import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Scissors, SprayCan, Sparkles, Crown, Star, Zap, Brush, Droplet, PenTool, CircleDot } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Scissors, CheckCircle2 } from "lucide-react";
 
-interface ServicesSectionProps {
-  onServiceSelect: (id: string) => void;
-}
+const BOOKSY_URL = "https://booksy.com/pl-pl/293129_bykucutzz-barbershop_barber-shop_23280_lodz";
 
 const services = [
-  { icon: Scissors, name: "Strzyżenie męskie (Byku)", dataServiceName: "strzyzenie-byku", price: "100 zł", duration: "45 min", description: "Precyzyjne cięcie wykonane przez założyciela salonu. Dopasowanie formy do kształtu twarzy i stylu." },
-  { icon: Scissors, name: "Strzyżenie męskie", dataServiceName: "strzyzenie", price: "90 zł", duration: "45 min", description: "Klasyczne lub nowoczesne strzyżenie w wykonaniu naszych barberów. Mycie i stylizacja w cenie." },
-  { icon: SprayCan, name: "Buzz Cut", dataServiceName: "buzzcut", price: "80 zł", duration: "30 min", description: "Krótkie, techniczne cięcie maszynką. Idealne dla fanów wygody i ostrych linii." },
-  { icon: Sparkles, name: "Metamorfoza", dataServiceName: "metamorfoza", price: "110 zł", duration: "1 h 5 min", description: "Całkowita zmiana wizerunku. Konsultacja, dobór nowej fryzury i pełne cięcie." },
-  { icon: Crown, name: "Design / Wzorek", dataServiceName: "design", price: "10 zł", duration: "10 min", description: "Personalizacja fryzury poprzez wycięcie brzytwą unikalnego wzoru lub linii." },
-  { icon: Star, name: "Strzyżenie włosów i brody COMBO (Byku)", dataServiceName: "combo-byku", price: "140 zł", duration: "1 h 15 min", description: "Pełny serwis u właściciela. Strzyżenie głowy oraz profesjonalne formowanie i konturowanie brody." },
-  { icon: Zap, name: "Strzyżenie włosów i brody COMBO", dataServiceName: "combo", price: "130 zł", duration: "1 h 15 min", description: "Kompletny pakiet: fryzura plus zadbana broda. Gorący ręcznik i pielęgnacja w zestawie." },
-  { icon: Brush, name: "Strzyżenie brody", dataServiceName: "broda", price: "60 zł", duration: "30 min", description: "Nadanie kształtu brodzie, podgolenie konturów brzytwą i nałożenie odżywczego olejku." },
-  { icon: Droplet, name: "Repigmentacja brody", dataServiceName: "repigmentacja", price: "50 zł", duration: "25 min", description: "Naturalne tuszowanie siwizny i wyrównanie koloru brody. Efekt świeżości i zagęszczenia." },
-  { icon: PenTool, name: "Konturowanie brody", dataServiceName: "konturowanie", price: "20 zł", duration: "20 min", description: "Szybkie odświeżenie samej linii brody brzytwą lub trymerem." },
-  { icon: CircleDot, name: "Strzyżenie głowy na 0 + strzyżenie brody", dataServiceName: "zero-broda", price: "70 zł", duration: "45 min", description: "Pełne golenie głowy maszynką/brzytwą połączone z profesjonalnym serwisem brody." },
-  { icon: Sparkles, name: "Woskowanie nosa", dataServiceName: "woskowanie", price: "20 zł", duration: "5 min", description: "Szybkie i skuteczne usuwanie zbędnych włosków z nosa przy użyciu profesjonalnego wosku." },
+  { name: "Strzyżenie męskie (Byku)", price: "120 PLN", desc: "Usługa premium u właściciela" },
+  { name: "Strzyżenie męskie", price: "90 PLN", desc: "Klasyczne strzyżenie + mycie" },
+  { name: "Combo (Byku)", price: "180 PLN", desc: "Włosy + Broda u właściciela" },
+  { name: "Combo Włosy+Broda", price: "150 PLN", desc: "Pełny serwis barberski" },
+  { name: "Strzyżenie Brody", price: "70 PLN", desc: "Kształt, kontur i gorący ręcznik" },
+  { name: "Buzz Cut", price: "60 PLN", desc: "Strzyżenie samą maszynką" },
+  { name: "Metamorfoza", price: "130 PLN", desc: "Całkowita zmiana wizerunku" },
+  { name: "Design / Wzorek", price: "+20 PLN", desc: "Indywidualne wzory maszynką" },
+  { name: "Repigmentacja", price: "60 PLN", desc: "Maskowanie siwizny brody" },
+  { name: "Konturowanie", price: "40 PLN", desc: "Odświeżenie linii zarostu" },
+  { name: "Głowa na 0 + Broda", price: "130 PLN", desc: "Golenie głowy + serwis brody" },
+  { name: "Woskowanie Nosa", price: "20 PLN", desc: "Usuwanie zbędnych włosków" },
 ];
 
-const ServicesSection = ({ onServiceSelect }: ServicesSectionProps) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const scrollToBooking = () => {
-    const element = document.querySelector("#booking-system");
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
-
+const ServicesSection = () => {
   return (
-    <section id="uslugi" className="py-24 md:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-card" />
-      <div className="marble-veins absolute inset-0" />
-      <div className="chrome-divider absolute top-0 left-0 right-0" />
+    <section id="services" className="py-24 bg-[#050505] relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-6xl md:text-7xl font-display uppercase italic tracking-tighter mb-4">NASZE <span className="text-primary">USŁUGI</span></h2>
+          <div className="h-1 w-20 bg-primary mx-auto mb-8"></div>
+        </div>
 
-      <div className="container mx-auto px-4 md:px-8 relative" ref={ref}>
-        <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
-          <h2 className="font-display text-5xl md:text-7xl text-foreground mb-4">NASZE <span className="text-primary">USŁUGI</span></h2>
-          <p className="font-body text-muted-foreground max-w-xl mx-auto">Każda usługa wykonywana z najwyższą precyzją i dbałością o szczegóły</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <motion.div key={service.dataServiceName} initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: index * 0.05 }} className="glass-card rounded-lg p-6 group hover:neon-border transition-all duration-500">
-              <div className="flex items-start justify-between mb-4">
-                <div className="w-12 h-12 rounded-lg bg-secondary flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                  <service.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div className="text-right">
-                  <span className="font-display text-2xl text-primary block">{service.price}</span>
-                  <span className="font-body text-xs text-muted-foreground">{service.duration}</span>
-                </div>
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+              className="bg-white/5 border border-white/10 p-8 rounded-[2rem] hover:border-primary/50 transition-all group"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <Scissors className="text-primary opacity-20 group-hover:opacity-100 transition-opacity" size={20} />
+                <span className="text-2xl font-display text-primary">{service.price}</span>
               </div>
-              <h3 className="font-display text-xl text-foreground mb-2">{service.name}</h3>
-              <p className="font-body text-muted-foreground text-sm mb-4 line-clamp-2">{service.description}</p>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full"
-                onClick={() => {
-                  onServiceSelect(service.dataServiceName);
-                  scrollToBooking();
-                }}
+              <h3 className="text-xl font-bold uppercase mb-2 tracking-tight group-hover:text-primary transition-colors">{service.name}</h3>
+              <p className="text-white/40 text-xs uppercase tracking-widest mb-6 font-medium">{service.desc}</p>
+              
+              <a 
+                href={BOOKSY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 bg-white/5 border border-white/10 rounded-xl inline-flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-black transition-all"
               >
-                Rezerwuj
-              </Button>
+                REZERWUJ <CheckCircle2 size={14} />
+              </a>
             </motion.div>
           ))}
         </div>
       </div>
-      <div className="chrome-divider absolute bottom-0 left-0 right-0" />
     </section>
   );
 };

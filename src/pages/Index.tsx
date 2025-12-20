@@ -1,34 +1,39 @@
-import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
-import BookingSection from "@/components/BookingSection";
-import PortfolioSection from "@/components/PortfolioSection";
 import TeamSection from "@/components/TeamSection";
-import ReviewsSection from "@/components/ReviewsSection";
+import BookingSection from "@/components/BookingSection";
 import LocationSection from "@/components/LocationSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  // Stan przechowujący techniczne ID wybranej usługi
-  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
-
-  const handleServiceSelect = (serviceId: string) => {
-    setSelectedServiceId(serviceId);
-  };
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black text-white selection:bg-primary selection:text-black">
       <Navbar />
+      
+      {/* Sekcja Hero */}
       <HeroSection />
-      {/* Przekazujemy funkcję wyboru do sekcji usług */}
-      <ServicesSection onServiceSelect={handleServiceSelect} />
-      <PortfolioSection />
-      <TeamSection />
-      {/* Przekazujemy stan do sekcji rezerwacji */}
-      <BookingSection preselectedServiceId={selectedServiceId} />
-      <ReviewsSection />
-      <LocationSection />
+      
+      {/* Sekcja Usługi */}
+      <section id="services">
+        <ServicesSection />
+      </section>
+      
+      {/* Sekcja Ekipy */}
+      <section id="team">
+        <TeamSection />
+      </section>
+      
+      {/* Sekcja Rezerwacji (Przycisk Booksy) */}
+      <section id="rezerwacja">
+        <BookingSection />
+      </section>
+      
+      {/* Sekcja Lokalizacji i Kontaktu */}
+      <section id="location">
+        <LocationSection />
+      </section>
+      
       <Footer />
     </div>
   );
