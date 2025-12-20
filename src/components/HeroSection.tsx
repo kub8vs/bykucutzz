@@ -1,11 +1,12 @@
 import React from 'react';
+import { motion } from 'framer-motion'; // Import biblioteki do animacji
 import logo from "../assets/logo_byku1.png";
 import heroImage from "../assets/hero-shop.jpg";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* TŁO: ZDJĘCIE SALONU */}
+      {/* TŁO ZE ZDJĘCIEM I NAKŁADKĄ */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
@@ -15,25 +16,47 @@ const HeroSection = () => {
         <div className="absolute inset-0 hero-overlay"></div>
       </div>
 
-      {/* TEKSTURA MARMURU (MUSI BYĆ NAD ZDJĘCIEM) */}
-      <div className="absolute inset-0 z-[1] marble-veins"></div>
+      {/* TEKSTURA MARMURU Z DELIKATNYM POJAWIENIEM SIĘ */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.8 }}
+        transition={{ duration: 1.5 }}
+        className="absolute inset-0 z-[1] marble-veins"
+      ></motion.div>
 
       <div className="container mx-auto px-6 relative z-10 text-center">
-        {/* WIĘKSZE LOGO */}
-        <img 
+        {/* ANIMACJA LOGO: Powiększenie + Wjazd z góry */}
+        <motion.img 
           src={logo} 
           alt="BYKU CUTZZ" 
-          className="h-48 md:h-80 mx-auto mb-10 animate-float object-contain"
+          initial={{ opacity: 0, y: -30, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ 
+            duration: 0.6, 
+            ease: [0.22, 1, 0.36, 1] // Płynne wyhamowanie (custom cubic-bezier)
+          }}
+          className="h-48 md:h-80 mx-auto mb-10 object-contain drop-shadow-[0_0_30px_rgba(255,215,0,0.1)]"
         />
         
-        {/* MNIEJSZY NAPIS */}
-        <h1 className="text-5xl md:text-7xl font-display uppercase italic tracking-tighter mb-4 text-white">
+        {/* ANIMACJA GŁÓWNEGO NAPISU: Wjazd z dołu */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-5xl md:text-7xl font-display uppercase italic tracking-tighter mb-4 text-white"
+        >
           JAKOŚĆ PONAD <span className="text-primary italic">ILOŚĆ</span>
-        </h1>
+        </motion.h1>
         
-        <p className="text-white/40 uppercase tracking-[0.6em] text-[10px] md:text-xs font-black">
+        {/* ANIMACJA PODTYTUŁU: Rozmycie + Fade-in */}
+        <motion.p 
+          initial={{ opacity: 0, filter: "blur(10px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-white/40 uppercase tracking-[0.6em] text-[10px] md:text-xs font-black"
+        >
           Mistrzowskie cięcie w sercu Łodzi
-        </p>
+        </motion.p>
       </div>
     </section>
   );
