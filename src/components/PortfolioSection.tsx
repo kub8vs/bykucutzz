@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { X } from "lucide-react";
 
-// Importy Twoich zdjęć z folderu assets
+// Import Twoich autentycznych zdjęć
 import fadeImg from "../assets/fade.jpg";
 import fade1Img from "../assets/fade1.jpg";
 import fade2Img from "../assets/fade2.jpg";
@@ -24,7 +24,7 @@ const PortfolioSection = () => {
 
   return (
     <section id="portfolio" className="py-24 bg-black relative overflow-hidden">
-      {/* Tekstura marmuru w tle dla spójności */}
+      {/* Tekstura marmuru dla spójności wizualnej */}
       <div className="marble-veins absolute inset-0 opacity-20 pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -39,10 +39,10 @@ const PortfolioSection = () => {
           {portfolioImages.map((image) => (
             <motion.div
               key={image.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.4 }}
               onClick={() => setSelectedImg(image.src)}
               className="relative aspect-square overflow-hidden rounded-[2rem] border border-white/10 cursor-pointer group"
             >
@@ -51,7 +51,6 @@ const PortfolioSection = () => {
                 alt={image.alt}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              {/* Overlay z kategorią */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
                 <span className="text-primary font-display text-2xl uppercase tracking-widest italic">
                   {image.category}
@@ -62,7 +61,7 @@ const PortfolioSection = () => {
         </div>
       </div>
 
-      {/* Lightbox - powiększone zdjęcie po kliknięciu */}
+      {/* Widok powiększonego zdjęcia */}
       {selectedImg && (
         <div 
           className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"

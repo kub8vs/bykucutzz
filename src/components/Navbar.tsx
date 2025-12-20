@@ -13,9 +13,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Zaktualizuj tablicę navLinks wewnątrz komponentu Navbar:
   const navLinks = [
     { name: "USŁUGI", href: "#services" },
     { name: "EKIPA", href: "#team" },
+    { name: "PORTFOLIO", href: "#portfolio" }, // Dodane Portfolio
     { name: "OPINIE", href: "#reviews" },
     { name: "LOKALIZACJA", href: "#location" },
   ];

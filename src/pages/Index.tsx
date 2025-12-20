@@ -2,14 +2,15 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import TeamSection from "@/components/TeamSection";
-import ReviewsSection from "@/components/ReviewsSection"; // Dodaj ten import
+import PortfolioSection from "@/components/PortfolioSection"; // Dodaj ten import
+import ReviewsSection from "@/components/ReviewsSection";
 import BookingSection from "@/components/BookingSection";
 import LocationSection from "@/components/LocationSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white selection:bg-primary selection:text-black">
       <Navbar />
       <HeroSection />
       
@@ -21,8 +22,12 @@ const Index = () => {
         <TeamSection />
       </section>
 
-      {/* DODAJ SEKCJĘ OPINII TUTAJ */}
-      <ReviewsSection />
+      {/* Nowa sekcja Portfolio */}
+      <PortfolioSection />
+      
+      <section id="reviews">
+        <ReviewsSection />
+      </section>
       
       <section id="rezerwacja">
         <BookingSection />
