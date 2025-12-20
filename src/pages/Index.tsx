@@ -11,25 +11,21 @@ const Index = () => {
     <div className="min-h-screen bg-black text-white selection:bg-primary selection:text-black">
       <Navbar />
       
-      {/* Sekcja Hero */}
       <HeroSection />
       
-      {/* Sekcja Usługi */}
       <section id="services">
         <ServicesSection />
       </section>
       
-      {/* Sekcja Ekipy */}
       <section id="team">
         <TeamSection />
       </section>
       
-      {/* Sekcja Rezerwacji (Przycisk Booksy) */}
+      {/* Tutaj ląduje użytkownik po kliknięciu "UMÓW WIZYTĘ" */}
       <section id="rezerwacja">
         <BookingSection />
       </section>
       
-      {/* Sekcja Lokalizacji i Kontaktu */}
       <section id="location">
         <LocationSection />
       </section>
