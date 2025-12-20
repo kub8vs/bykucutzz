@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowLeft } from "lucide-react";
 import logo from "../assets/logo_byku1.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true); // Nowy stan widoczności
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Menu jest widoczne tylko na samym początku strony (sekcja Hero)
-      if (window.scrollY < 100) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-        setIsOpen(false); // Automatycznie zamknij menu mobilne przy przewijaniu
-      }
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Blokowanie przewijania strony, gdy menu jest otwarte
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isOpen]);
 
   const navLinks = [
     { name: "USŁUGI", href: "#services" },
@@ -30,16 +30,12 @@ const Navbar = () => {
   ];
 
   return (
-    <nav 
-      className={`fixed w-full z-[500] transition-all duration-700 ease-in-out ${
-        isVisible 
-          ? "translate-y-0 opacity-100 py-6" 
-          : "-translate-y-full opacity-0 pointer-events-none"
-      }`} // Klasy odpowiedzialne za znikanie
-    >
+    <nav className={`fixed w-full z-[500] transition-all duration-500 ${
+      scrolled ? "bg-black/95 backdrop-blur-md py-4 shadow-2xl" : "bg-transparent py-8"
+    }`}>
       <div className="container mx-auto px-6 flex flex-col items-center gap-6">
         
-        {/* LOGO NA GÓRZE */}
+        {/* LOGO - Zawsze widoczne na środku */}
         <a href="#" className="flex flex-col items-center group">
           <img 
             src={logo} 
@@ -69,36 +65,51 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Toggle Mobilny - ukryty, gdy pasek znika */}
+        {/* PRZYCISK HAMBURGERA (MOBILNY) - Stały */}
         <button 
-          className="md:hidden text-white absolute right-6 top-10" 
-          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-white absolute right-6 top-10 p-2 bg-white/5 rounded-full border border-white/10" 
+          onClick={() => setIsOpen(true)}
         >
-          {isOpen ? <X size={32} /> : <Menu size={32} />}
+          <Menu size={28} />
         </button>
       </div>
 
-      {/* Menu Mobilne Overlay */}
+      {/* PEŁNOEKRANOWE MENU MOBILNE */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black z-[400] flex flex-col items-center justify-center gap-8 animate-in fade-in zoom-in duration-300">
-          <img src={logo} alt="Logo" className="h-20 mb-8" />
-          {navLinks.map((link) => (
+        <div className="fixed inset-0 bg-black z-[1000] flex flex-col items-center justify-center animate-in fade-in duration-300">
+          {/* Tekstura marmuru w tle menu */}
+          <div className="marble-veins absolute inset-0 opacity-20 pointer-events-none" />
+          
+          <div className="relative z-10 flex flex-col items-center gap-8 w-full px-6">
+            <img src={logo} alt="Logo" className="h-24 mb-6 opacity-50" />
+            
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                onClick={() => setIsOpen(false)} 
+                className="text-4xl font-display italic text-white hover:text-primary transition-colors uppercase tracking-tighter"
+              >
+                {link.name}
+              </a>
+            ))}
+            
             <a 
-              key={link.name} 
-              href={link.href} 
+              href="#rezerwacja" 
               onClick={() => setIsOpen(false)} 
-              className="text-4xl font-display italic text-white hover:text-primary transition-colors uppercase"
+              className="mt-4 px-12 py-5 bg-primary text-black rounded-full font-display text-2xl uppercase tracking-widest shadow-[0_0_30px_rgba(102,226,255,0.3)]"
             >
-              {link.name}
+              UMÓW WIZYTĘ
             </a>
-          ))}
-          <a 
-            href="#rezerwacja" 
-            onClick={() => setIsOpen(false)} 
-            className="text-2xl font-display italic text-primary uppercase mt-4"
-          >
-            UMÓW WIZYTĘ
-          </a>
+
+            {/* PRZYCISK POWRÓT - Zamyka menu i zostaje w sekcji */}
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="mt-12 flex items-center gap-3 text-white/40 uppercase text-xs font-black tracking-[0.3em] hover:text-white transition-colors"
+            >
+              <ArrowLeft size={18} /> POWRÓT
+            </button>
+          </div>
         </div>
       )}
     </nav>
