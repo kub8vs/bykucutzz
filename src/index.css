@@ -1,12 +1,14 @@
+/* 1. Importy muszą być PIERWSZE */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anonymous+Pro:wght@400;700&display=swap');
 
+/* 2. Dopiero potem Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anonymous+Pro:wght@400;700&display=swap');
-
 @layer base {
+  /* reszta Twojego kodu... */
+}
   :root {
     --background: 0 0% 4%;
     --foreground: 0 0% 100%;
