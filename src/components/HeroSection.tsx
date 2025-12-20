@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import logo from "../assets/logo_byku1.png";
+import { motion } from 'framer-motion'; // Używamy framer-motion do płynnych animacji
+import logo from "../assets/logo_byku1.png"; // Import Twojego logo z folderu assets
 import heroImage from "../assets/hero-shop.jpg";
 
 const HeroSection = () => {
@@ -16,7 +16,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 hero-overlay"></div>
       </div>
 
-      {/* TEKSTURA MARMURU */}
+      {/* TEKSTURA MARMURU Z ANIMACJĄ WEJŚCIA */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.8 }}
@@ -25,7 +25,7 @@ const HeroSection = () => {
       ></motion.div>
 
       <div className="container mx-auto px-6 relative z-10 text-center">
-        {/* ANIMACJA LOGO - ZNACZNIE POWIĘKSZONE */}
+        {/* ANIMACJA LOGO - Z DODANYM NIEBIESKIM CIENIEM (NEON GLOW) */}
         <motion.img 
           src={logo} 
           alt="BYKU CUTZZ" 
@@ -35,8 +35,8 @@ const HeroSection = () => {
             duration: 0.8, 
             ease: [0.22, 1, 0.36, 1]
           }}
-          // TUTAJ JEST ZMIANA ROZMIARU:
-          className="h-[280px] md:h-[500px] mx-auto mb-8 object-contain drop-shadow-[0_0_30px_rgba(255,215,0,0.1)]"
+          // ZMIENIONO: drop-shadow na jasnoniebieski (rgba 102, 226, 255)
+          className="h-[280px] md:h-[500px] mx-auto mb-8 object-contain drop-shadow-[0_0_40px_rgba(102,226,255,0.3)]"
         />
         
         {/* GŁÓWNY NAPIS */}
