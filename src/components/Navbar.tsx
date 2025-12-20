@@ -1,43 +1,55 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-// Import Twojego logo
 import logo from "../assets/logo_byku1.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Nowy stan widoczności
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      // Menu jest widoczne tylko na samym początku strony (sekcja Hero)
+      if (window.scrollY < 100) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+        setIsOpen(false); // Automatycznie zamknij menu mobilne przy przewijaniu
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Zaktualizuj tablicę navLinks wewnątrz komponentu Navbar:
   const navLinks = [
     { name: "USŁUGI", href: "#services" },
     { name: "EKIPA", href: "#team" },
-    { name: "PORTFOLIO", href: "#portfolio" }, // Dodane Portfolio
+    { name: "PORTFOLIO", href: "#portfolio" },
     { name: "OPINIE", href: "#reviews" },
     { name: "LOKALIZACJA", href: "#location" },
   ];
 
   return (
-    <nav className={`fixed w-full z-[500] transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md py-4 shadow-2xl" : "bg-transparent py-6"}`}>
+    <nav 
+      className={`fixed w-full z-[500] transition-all duration-700 ease-in-out ${
+        isVisible 
+          ? "translate-y-0 opacity-100 py-6" 
+          : "-translate-y-full opacity-0 pointer-events-none"
+      }`} // Klasy odpowiedzialne za znikanie
+    >
       <div className="container mx-auto px-6 flex flex-col items-center gap-6">
         
-        {/* LOGO GRAFICZNE NA GÓRZE */}
+        {/* LOGO NA GÓRZE */}
         <a href="#" className="flex flex-col items-center group">
           <img 
             src={logo} 
             alt="BYKU CUTZZ Logo" 
-            className="h-16 md:h-24 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+            className="h-16 md:h-24 w-auto object-contain transition-transform duration-500"
           />
-          {/* Subtelna linia pod logo dla efektu premium */}
           <div className="h-[1px] w-32 bg-gradient-to-r from-transparent via-primary/50 to-transparent mt-4"></div>
         </a>
 
-        {/* MENU PONIŻEJ LOGO */}
+        {/* MENU DESKTOP */}
         <div className="hidden md:flex items-center gap-10 bg-white/5 px-10 py-4 rounded-full border border-white/5 backdrop-blur-sm">
           {navLinks.map((link) => (
             <a 
@@ -57,22 +69,34 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Mobile Toggle - widoczny obok logo na telefonach */}
-        <button className="md:hidden text-white absolute right-6 top-10" onClick={() => setIsOpen(!isOpen)}>
+        {/* Toggle Mobilny - ukryty, gdy pasek znika */}
+        <button 
+          className="md:hidden text-white absolute right-6 top-10" 
+          onClick={() => setIsOpen(!isOpen)}
+        >
           {isOpen ? <X size={32} /> : <Menu size={32} />}
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Menu Mobilne Overlay */}
       {isOpen && (
         <div className="fixed inset-0 bg-black z-[400] flex flex-col items-center justify-center gap-8 animate-in fade-in zoom-in duration-300">
           <img src={logo} alt="Logo" className="h-20 mb-8" />
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="text-4xl font-display italic text-white hover:text-primary transition-colors uppercase">
+            <a 
+              key={link.name} 
+              href={link.href} 
+              onClick={() => setIsOpen(false)} 
+              className="text-4xl font-display italic text-white hover:text-primary transition-colors uppercase"
+            >
               {link.name}
             </a>
           ))}
-          <a href="#rezerwacja" onClick={() => setIsOpen(false)} className="text-2xl font-display italic text-primary uppercase mt-4">
+          <a 
+            href="#rezerwacja" 
+            onClick={() => setIsOpen(false)} 
+            className="text-2xl font-display italic text-primary uppercase mt-4"
+          >
             UMÓW WIZYTĘ
           </a>
         </div>
