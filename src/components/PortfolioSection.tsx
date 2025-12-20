@@ -2,144 +2,82 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { X } from "lucide-react";
 
+// Importy Twoich zdjęć z folderu assets
+import fadeImg from "../assets/fade.jpg";
+import fade1Img from "../assets/fade1.jpg";
+import fade2Img from "../assets/fade2.jpg";
+import fade4Img from "../assets/fade4.jpg";
+import fade5Img from "../assets/fade5.jpg";
+import fade6Img from "../assets/fade6.jpg";
+
 const portfolioImages = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&h=800&fit=crop",
-    alt: "Fade haircut",
-    category: "Fade"
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&h=600&fit=crop",
-    alt: "Beard styling",
-    category: "Broda"
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&h=900&fit=crop",
-    alt: "Classic cut",
-    category: "Classic"
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&h=600&fit=crop",
-    alt: "Modern style",
-    category: "Modern"
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1596728325488-58c87691e9af?w=600&h=800&fit=crop",
-    alt: "Buzz cut",
-    category: "Buzzcut"
-  },
-  {
-    id: 6,
-    src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&h=700&fit=crop",
-    alt: "Textured crop",
-    category: "Texture"
-  },
-  {
-    id: 7,
-    src: "https://images.unsplash.com/photo-1593702288056-7927b442d0fa?w=600&h=600&fit=crop",
-    alt: "Skin fade",
-    category: "Fade"
-  },
-  {
-    id: 8,
-    src: "https://images.unsplash.com/photo-1582015752624-e8b1c8b17c4c?w=600&h=800&fit=crop",
-    alt: "Pompadour",
-    category: "Classic"
-  },
+  { id: 1, src: fadeImg, alt: "Fade Haircut", category: "Fade" },
+  { id: 2, src: fade1Img, alt: "Beard Styling", category: "Broda" },
+  { id: 3, src: fade2Img, alt: "Classic Cut", category: "Classic" },
+  { id: 4, src: fade4Img, alt: "Modern Style", category: "Modern" },
+  { id: 5, src: fade5Img, alt: "Buzz cut", category: "Buzzcut" },
+  { id: 6, src: fade6Img, alt: "Textured crop", category: "Texture" },
 ];
 
 const PortfolioSection = () => {
-  const [selectedImage, setSelectedImage] = useState<typeof portfolioImages[0] | null>(null);
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
   return (
-    <section id="portfolio" className="py-24 relative overflow-hidden">
-      {/* Subtle Marble Background */}
-      <div className="marble-veins absolute inset-0 opacity-10" />
-      
-      <div className="container mx-auto px-4 md:px-8 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="font-display text-4xl md:text-6xl text-foreground mb-4">
-            PORT<span className="text-primary neon-text">FOLIO</span>
-          </h2>
-          <p className="font-body text-muted-foreground max-w-2xl mx-auto">
-            Nasze najlepsze realizacje. Każde strzyżenie to dzieło sztuki.
-          </p>
-        </motion.div>
+    <section id="portfolio" className="py-24 bg-black relative overflow-hidden">
+      {/* Tekstura marmuru w tle dla spójności */}
+      <div className="marble-veins absolute inset-0 opacity-20 pointer-events-none" />
 
-        {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {portfolioImages.map((image, index) => (
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-6xl md:text-7xl font-display uppercase italic tracking-tighter mb-4 text-white">
+            NASZE <span className="text-primary">PRACE</span>
+          </h2>
+          <div className="h-1 w-20 bg-primary mx-auto mb-8"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {portfolioImages.map((image) => (
             <motion.div
               key={image.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="break-inside-avoid group cursor-pointer"
-              onClick={() => setSelectedImage(image)}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.4 }}
+              onClick={() => setSelectedImg(image.src)}
+              className="relative aspect-square overflow-hidden rounded-[2rem] border border-white/10 cursor-pointer group"
             >
-              <div className="relative overflow-hidden rounded-lg border border-border/30 bg-card">
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <span className="font-body font-bold text-sm uppercase tracking-wider text-primary">
-                    {image.category}
-                  </span>
-                </div>
-                {/* Neon Border on Hover */}
-                <div className="absolute inset-0 rounded-lg border-2 border-primary/0 group-hover:border-primary/50 transition-colors duration-300 pointer-events-none" />
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              {/* Overlay z kategorią */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
+                <span className="text-primary font-display text-2xl uppercase tracking-widest italic">
+                  {image.category}
+                </span>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Lightbox */}
-      {selectedImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
+      {/* Lightbox - powiększone zdjęcie po kliknięciu */}
+      {selectedImg && (
+        <div 
+          className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+          onClick={() => setSelectedImg(null)}
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="relative max-w-4xl max-h-[90vh]"
-          >
-            <img
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              className="max-w-full max-h-[85vh] object-contain rounded-lg border-2 border-primary/30"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
-            >
-              <X size={20} />
-            </button>
-            <p className="text-center mt-4 font-body font-bold text-primary uppercase tracking-wider">
-              {selectedImage.category}
-            </p>
-          </motion.div>
-        </motion.div>
+          <button className="absolute top-8 right-8 text-white hover:text-primary transition-colors">
+            <X size={40} />
+          </button>
+          <motion.img
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            src={selectedImg}
+            className="max-w-full max-h-[90vh] rounded-3xl object-contain shadow-[0_0_50px_rgba(190,242,255,0.2)]"
+          />
+        </div>
       )}
     </section>
   );
