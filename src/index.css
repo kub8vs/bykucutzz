@@ -10,24 +10,15 @@
     --foreground: 0 0% 100%;
     --primary: 190 89% 65%;
     --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 190 89% 65%;
-    --radius: 0.5rem;
-    --neon: 190 89% 65%;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
+  html { scroll-behavior: smooth; }
+  body { 
     @apply bg-background text-foreground antialiased;
-    font-family: 'Anonymous Pro', monospace;
+    font-family: 'Anonymous Pro', monospace; 
   }
 }
 
 @layer utilities {
-  .font-display {
-    font-family: 'Bebas Neue', sans-serif;
-  }
+  .font-display { font-family: 'Bebas Neue', sans-serif; }
 }
