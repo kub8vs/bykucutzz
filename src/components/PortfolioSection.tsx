@@ -11,11 +11,11 @@ import fade5Img from "../assets/fade5.jpg";
 import fade6Img from "../assets/fade6.jpg";
 
 const portfolioImages = [
-  { id: 1, src: fadeImg, alt: "Fade Haircut", category: "Fade" },
+  { id: 1, src: fadeImg, alt: "Fade Haircut", category: "BuzzCut" },
   { id: 2, src: fade1Img, alt: "Beard Styling", category: "Broda" },
   { id: 3, src: fade2Img, alt: "Classic Cut", category: "Classic" },
-  { id: 4, src: fade4Img, alt: "Modern Style", category: "Modern" },
-  { id: 5, src: fade5Img, alt: "Buzz cut", category: "Buzzcut" },
+  { id: 4, src: fade4Img, alt: "Modern Style", category: "SlickBack" },
+  { id: 5, src: fade5Img, alt: "Buzz cut", category: "Loki" },
   { id: 6, src: fade6Img, alt: "Textured crop", category: "Texture" },
 ];
 
