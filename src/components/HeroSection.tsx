@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import heroBg from "@/assets/hero-shop.jpg";
-import logo from "@/assets/logo-byku2.png";
+import logo from "@/assets/logo_byku2.png";
 
 const HeroSection = () => {
   const scrollToBooking = () => {
