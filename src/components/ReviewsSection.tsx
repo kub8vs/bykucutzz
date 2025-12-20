@@ -11,7 +11,7 @@ const reviews = [
   {
     name: "Kamil G.",
     rating: 5,
-    text: "Combo u Maciasa to czysta przyjemność. Broda idealnie wykonturowana, gorący ręcznik robi robotę.",
+    text: "Dobra robota Afraish!",
     date: "tydzień temu"
   },
   {
@@ -29,7 +29,7 @@ const reviews = [
   {
     name: "Piotr H.",
     rating: 5,
-    text: "Dobra robota Afraish!",
+    text: "Combo u Maciasa to czysta przyjemność. Broda idealnie wykonturowana, gorący ręcznik robi robotę.",
     date: "5 dni temu"
   },
   {

@@ -109,10 +109,10 @@ const LocationSection = () => {
                 <div>
                   <h3 className="font-display text-2xl text-foreground mb-2">Kontakt</h3>
                   <p className="font-body text-foreground text-lg">
-                    +48 123 456 789
+                    +48 882 555 590
                   </p>
                   <p className="font-body text-muted-foreground">
-                    kontakt@bykucutzz.com
+                    bykucutzz@gmail.com
                   </p>
                 </div>
               </div>
