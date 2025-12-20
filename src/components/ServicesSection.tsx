@@ -4,17 +4,17 @@ import { Scissors, CheckCircle2 } from "lucide-react";
 const BOOKSY_URL = "https://booksy.com/pl-pl/293129_bykucutzz-barbershop_barber-shop_23280_lodz";
 
 const services = [
-  { name: "Strzyżenie męskie (Byku)", price: "120 PLN", desc: "Usługa premium u właściciela" },
+  { name: "Strzyżenie męskie (Byku)", price: "100 PLN", desc: "Usługa premium u właściciela" },
   { name: "Strzyżenie męskie", price: "90 PLN", desc: "Klasyczne strzyżenie + mycie" },
-  { name: "Combo (Byku)", price: "180 PLN", desc: "Włosy + Broda u właściciela" },
-  { name: "Combo Włosy+Broda", price: "150 PLN", desc: "Pełny serwis barberski" },
-  { name: "Strzyżenie Brody", price: "70 PLN", desc: "Kształt, kontur i gorący ręcznik" },
-  { name: "Buzz Cut", price: "60 PLN", desc: "Strzyżenie samą maszynką" },
-  { name: "Metamorfoza", price: "130 PLN", desc: "Całkowita zmiana wizerunku" },
-  { name: "Design / Wzorek", price: "+20 PLN", desc: "Indywidualne wzory maszynką" },
-  { name: "Repigmentacja", price: "60 PLN", desc: "Maskowanie siwizny brody" },
-  { name: "Konturowanie", price: "40 PLN", desc: "Odświeżenie linii zarostu" },
-  { name: "Głowa na 0 + Broda", price: "130 PLN", desc: "Golenie głowy + serwis brody" },
+  { name: "Combo (Byku)", price: "140 PLN", desc: "Włosy + Broda u właściciela" },
+  { name: "Combo Włosy+Broda", price: "130 PLN", desc: "Pełny serwis barberski" },
+  { name: "Strzyżenie Brody", price: "60 PLN", desc: "Kształt, kontur i gorący ręcznik" },
+  { name: "Buzz Cut", price: "80 PLN", desc: "Strzyżenie samą maszynką" },
+  { name: "Metamorfoza", price: "110 PLN", desc: "Całkowita zmiana wizerunku" },
+  { name: "Design / Wzorek", price: "10 PLN", desc: "Indywidualne wzory maszynką" },
+  { name: "Repigmentacja", price: "50 PLN", desc: "Maskowanie siwizny brody" },
+  { name: "Konturowanie", price: "20 PLN", desc: "Odświeżenie linii zarostu" },
+  { name: "Głowa na 0 + Broda", price: "70 PLN", desc: "Golenie głowy + serwis brody" },
   { name: "Woskowanie Nosa", price: "20 PLN", desc: "Usuwanie zbędnych włosków" },
 ];
 
