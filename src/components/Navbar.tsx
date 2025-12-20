@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 // Import Twojego logo
-import logo from "../assets/logo-byku2.png";
+import logo from "../assets/logo-byku.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
